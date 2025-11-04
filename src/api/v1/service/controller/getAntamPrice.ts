@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import scrapeHargaEmas from "../../../../service/price-gold-antam/scrape";
 
-export async function ControlerGetAntamPrice(req: Request, res: Response) {
+export default async function ControlerGetAntamPrice(req: Request, res: Response) {
     try {
         const result = await scrapeHargaEmas();
 

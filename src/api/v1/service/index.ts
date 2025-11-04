@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ControlerGetAntamPrice } from './controller/getAntamPrice';
+import ControlerGetAntamPrice from './controller/getAntamPrice';
 
 const router = Router();
 
