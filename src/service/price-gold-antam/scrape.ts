@@ -1,14 +1,12 @@
 import axios from "axios";
 import * as cheerio from 'cheerio';
-
-// URL target
-const url = 'https://galeri24.co.id/harga-emas';
+import Environment from "../../helper/constan/environment";
 
 async function scrapeHargaEmas() {
     try {
         const response = await axios({
             method: 'GET',
-            url: url,
+            url: Environment.URL_API_ANTAM,
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36',
                 'Accept-Language': 'en-US,en;q=0.9,id;q=0.8',
@@ -24,7 +22,7 @@ async function scrapeHargaEmas() {
         const dataRowsSelector = '#ANTAM .grid-cols-5.divide-x';
 
         const tanggalUpdate = $('#ANTAM .text-lg.font-semibold').text().trim();
-        console.log(`\n📅 ${tanggalUpdate}`);
+        console.log(`${tanggalUpdate}`);
 
         $(dataRowsSelector).each((index, element) => {
             if (index === 0) return;
@@ -44,7 +42,7 @@ async function scrapeHargaEmas() {
 
         return dataEmas;
     } catch (error) {
-        console.error(`❌ Terjadi kesalahan saat scraping:`, error);
+        console.error(`Terjadi kesalahan saat scraping:`, error);
         throw error;
     }
 }

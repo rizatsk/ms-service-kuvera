@@ -19,7 +19,7 @@ export default function loadRoutes(app: Express) {
       const router: Router = route.default || route;
 
       app.use(`${versionPrefix}/${dir}`, router);
-      console.log(`✅ Loaded route: ${versionPrefix}/${dir}`);
+      console.log(`Loaded route: ${versionPrefix}/${dir}`);
     }
   });
 }

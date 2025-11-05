@@ -1,13 +1,13 @@
 import puppeteer from "puppeteer";
+import Environment from "../../helper/constan/environment";
 
 export async function getIHSGData() {
     const browser = await puppeteer.launch({
-        headless: false, // Test dengan false dulu
+        headless: true, // Test dengan false dulu
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-blink-features=AutomationControlled',
-            '--enable-features=NetworkService',
             '--disable-features=IsolateOrigins,site-per-process'
         ]
     });
@@ -28,12 +28,14 @@ export async function getIHSGData() {
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     );
 
-    await page.goto('https://idx.co.id/primary/TradingSummary/GetStockSummary?length=9999&start=0', {
+    await page.goto(Environment.URL_API_IHSG, {
         waitUntil: 'networkidle2'
     });
 
-    const content = await page.content();
-    console.log(content);
+    let content = await page.content();
+    content = content.replace(`<html><head><meta name=\"color-scheme\" content=\"light dark\"><meta charset=\"utf-8\"></head><body><pre>`, '');
+    content = content.replace(`</pre><div class=\"json-formatter-container\"></div></body></html>`, '');
 
     await browser.close();
+    return JSON.parse(content);
 }
