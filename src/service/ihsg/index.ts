@@ -1,7 +1,16 @@
 import puppeteer from "puppeteer";
 import Environment from "../../helper/constan/environment";
+import { redisGet, redisSet } from "../../config/redis";
+import { getTTLUntilNextMorningStock } from "../../helper/ttl-cache";
 
 export async function getIHSGData() {
+    // Cek data redis
+    const keyCacheRedis = 'price-stock-idx';
+    const cache = await redisGet(keyCacheRedis);
+    if (cache) {
+        return JSON.parse(cache)
+    }
+
     const browser = await puppeteer.launch({
         headless: true, // Test dengan false dulu
         args: [
@@ -37,5 +46,11 @@ export async function getIHSGData() {
     content = content.replace(`</pre><div class=\"json-formatter-container\"></div></body></html>`, '');
 
     await browser.close();
-    return JSON.parse(content);
+    const priceStockIDX = JSON.parse(content);
+
+    // Set redis 3 minutes
+    const ttlStock = getTTLUntilNextMorningStock()
+    await redisSet(keyCacheRedis, JSON.stringify(priceStockIDX), ttlStock);
+
+    return priceStockIDX;
 }

@@ -7,7 +7,7 @@ export default async function ControlerGetIhsgPrice(req: Request, res: Response)
 
         return res.status(200).json({
             message: 'success',
-            data: result
+            data: result.data
         })
     } catch(error) {
         console.error("error controller get ihsg price", error);

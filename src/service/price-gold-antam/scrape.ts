@@ -1,9 +1,18 @@
 import axios from "axios";
 import * as cheerio from 'cheerio';
 import Environment from "../../helper/constan/environment";
+import { redisGet, redisSet } from "../../config/redis";
+import { getTTLUntilNextMorningGold } from "../../helper/ttl-cache";
 
 async function scrapeHargaEmas() {
     try {
+        // Cek data redis
+        const keyCacheRedis = 'price-gold-antam';
+        const cache = await redisGet(keyCacheRedis);
+        if (cache) {
+            return JSON.parse(cache)
+        }
+
         const response = await axios({
             method: 'GET',
             url: Environment.URL_API_ANTAM,
@@ -39,6 +48,10 @@ async function scrapeHargaEmas() {
                 harga_buyback: hargaBuyback.replace(/Rp\s*/g, '').trim()
             });
         });
+
+        // Set redis 1 hourse
+        const ttlGold = getTTLUntilNextMorningGold()
+        await redisSet(keyCacheRedis, JSON.stringify(dataEmas), ttlGold);
 
         return dataEmas;
     } catch (error) {
