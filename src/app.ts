@@ -12,8 +12,11 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
       message: "Invalid JSON payload",
     });
   }
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   next();
 });
+
 
 loadRoutes(app);
 
