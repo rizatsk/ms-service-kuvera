@@ -18,7 +18,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'updated_dt'> 
 })
 export class User extends Model<User, UserCreationAttributes> {
   @Column({
-    type: DataType.CHAR(50),
+    type: DataType.STRING(50),
     allowNull: false,
     primaryKey: true,
   })
@@ -26,13 +26,13 @@ export class User extends Model<User, UserCreationAttributes> {
 
   @ForeignKey(() => Account)
   @Column({
-    type: DataType.CHAR(50),
+    type: DataType.STRING(50),
     allowNull: false,
   })
   account_id!: string;
 
   @Column({
-    type: DataType.CHAR(100),
+    type: DataType.STRING(100),
     allowNull: false,
   })
   name!: string;

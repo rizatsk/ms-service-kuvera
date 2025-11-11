@@ -27,7 +27,7 @@ app.listen(PORT, async () => {
   );
 
   // connect db
-  sequelize.sync({ alter: false })
+  sequelize.sync({ alter: false,  force: false })
     .then(() => logger.info("Database connected & synced!"))
     .catch((err) => logger.error({ message: "Database error", error: err }));
 
