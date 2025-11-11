@@ -1,4 +1,5 @@
-import express, { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import { sequelize } from './config/database_pg';
 import loadRoutes from './routes';
 
 const app = express();
@@ -16,7 +17,6 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   next();
 });
-
 
 loadRoutes(app);
 
