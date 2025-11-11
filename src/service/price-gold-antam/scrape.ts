@@ -31,7 +31,6 @@ async function scrapeHargaEmas() {
         const dataRowsSelector = '#ANTAM .grid-cols-5.divide-x';
 
         const tanggalUpdate = $('#ANTAM .text-lg.font-semibold').text().trim();
-        console.log(`${tanggalUpdate}`);
 
         $(dataRowsSelector).each((index, element) => {
             if (index === 0) return;
