@@ -1,8 +1,6 @@
-
-import { Sequelize } from "sequelize";
-import { Account } from "../models/account";
-import { User } from "../models/user";
+import { QueryTypes } from "sequelize";
 import { verifyAuthToken } from "../business/domain/auth/auth-token";
+import { sequelize } from "../config/database_pg";
 
 export const resolvers = {
   Query: {
@@ -17,14 +15,18 @@ export const resolvers = {
       // Verify token JWT
       const data_user = verifyAuthToken(token);
 
-      const resultAccount = await Account.findOne({
-        raw: true,
-        where: {
-          id: data_user.account_id
-        },
-      });
+      const [results] = await sequelize.query(
+        `SELECT name, email, photo_profile_url, created_dt, updated_dt 
+          FROM accounts
+          JOIN users ON accounts.id = users.account_id
+          WHERE accounts.id = :id`,
+        {
+          replacements: { id: data_user.account_id },
+          type: QueryTypes.SELECT,
+        }
+      );
 
-      return resultAccount;
+      return results;
     },
   },
 };

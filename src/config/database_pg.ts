@@ -13,5 +13,10 @@ export const sequelize = new Sequelize({
     password: Environment.DB_PG_PASSWORD,
     database: Environment.DB_PG_NAME,
     models: [Account, User, SessionAuth],
-    logging: false, // matikan log query di console
+    logging: false,
+    timezone: '+07:00',
+    dialectOptions: {
+        useUTC: false,
+        options: '-c timezone=Asia/Jakarta',
+    },
 });
