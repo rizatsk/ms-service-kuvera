@@ -26,6 +26,7 @@ const Environment = {
     MAX_DEVICE_LOGIN: parseInt(process.env.MAX_DEVICE_LOGIN || '3'),
     SECRET_TOKEN_JWT: process.env.SECRET_TOKEN_JWT || '',
     PRIVATE_KEY_JWT: process.env.PRIVATE_KEY_JWT || '',
+    PUBLIC_KEY_JWT: process.env.PUBLIC_KEY_JWT || '',
 }
 
 export default Environment;

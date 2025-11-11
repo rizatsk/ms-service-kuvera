@@ -28,3 +28,20 @@ export function generateTokenJwt(hash: GenerateTokenJwtParam): string {
     throw error;
   }
 }
+
+export function verifyTokenJwt(token: string): string {
+  try {
+    const publicKey = Environment.PUBLIC_KEY_JWT;
+
+    const options = {
+      issuer: 'rjshub',
+      algorithms: ['RS256'] as jwt.Algorithm[],
+    };
+
+    const userToken = jwt.verify(token, publicKey, options) as GenerateTokenJwtParam;
+    return userToken['oat'];
+  } catch (error) {
+    logger.error({ message: 'Error verify jwt token', error });
+    throw error;
+  }
+}
