@@ -3,3 +3,9 @@ export type DomainAddAccountProps = {
     name: string,
     photo_profile: string
 }
+
+export type AddSessionAuthParam = {
+    account_id: string, 
+    token: string, 
+    id: string
+}

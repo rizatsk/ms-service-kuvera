@@ -11,13 +11,13 @@ export async function ControllerAuthGoogle(req: Request, res: Response) {
             throw  40460;
         }
         const authToken = authHeader.split(' ')[1] as string;
-        await usecasesAuth(authToken);
+        const { accessToken, refreshToken } = await usecasesAuth(authToken);
       
         return res.status(200).json({
             message: 'success',
             data: {
-                accessToken: 'oke',
-                refreshToken: 'oke'
+                accessToken: accessToken,
+                refreshToken: refreshToken
             }
         })
     } catch (error: any) {

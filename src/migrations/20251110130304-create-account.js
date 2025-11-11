@@ -12,7 +12,7 @@ module.exports = {
     await queryInterface.createTable('accounts', {
       id: { type: Sequelize.STRING({ length: 50 }), primaryKey: true },
       email: { type: Sequelize.STRING({ length: 250 }), allowNull: false, unique: true },
-      createdAt: { type: Sequelize.DATE, allowNull: false },
+      created_dt: { type: Sequelize.DATE, allowNull: false },
     });
   },
 
