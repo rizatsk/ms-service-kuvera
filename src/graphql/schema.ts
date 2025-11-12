@@ -7,7 +7,13 @@ export const typeDefs = `#graphql
     updated_dt: String
   }
 
+  type Category_Spend {
+    id: String!
+    name: String!
+  }
+
   type Query {
     account: Account
+    categories_spend: [Category_Spend!]!
   }
 `;
