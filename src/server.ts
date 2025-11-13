@@ -19,12 +19,20 @@ app.listen(PORT, async () => {
   // Run Graphql
   await serverGraphql.start();
   app.use(
+    '/graphql',
     cors(),
     express.json(),
     expressMiddleware(serverGraphql, {
       context: async ({ req }) => ({ req }),
     }),
   );
+
+  app.use((req, res) => {
+    res.status(404).json({
+      status: 'error',
+      message: `Route Not Found`,
+    });
+  });
 
   // connect db
   sequelize.sync({ alter: false,  force: false })

@@ -14,6 +14,18 @@ export async function getSessionAuthByAccountId(account_id: string): Promise<{ i
     return auths;
 }
 
+export async function getSessionAuthById(id: string) {
+    const auth = await SessionAuth.findOne({
+        raw: true,
+        where: {
+            id,
+        },
+        attributes: ['id', 'created_dt']
+    })
+
+    return auth;
+}
+
 export async function addSessionAuth({account_id, token, id}: AddSessionAuthParam) {
     const sessionAuth = await SessionAuth.create({
         id: id,

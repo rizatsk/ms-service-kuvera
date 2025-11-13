@@ -1,7 +1,18 @@
-const customFormatErrorGraphQl = (formattedError: any, error: any) => {
+import logger from "../config/logger";
+
+const customFormatErrorGraphQl = (formattedError: any) => {
+  const error = formattedError.message;
+
+  if (error === '40104' || '40101') {
+    return {
+      message: 'unauthenticated',
+      statusCode: error,
+    }
+  };
+  
   return {
-    message: formattedError.message,
-    code: formattedError.extensions?.code,
+    message: 'internal server error',
+    statusCode: error,
   };
 };
 
