@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import usecasesAuth from "../../../../business/usecases/auth/auth";
 import logger from "../../../../config/logger";
-import handleError from "../../../../helper/handle-error";
+import handleError from "../../../../helper/error/handle-error";
 
 async function ControllerAuthGoogle(req: Request, res: Response) {
     try {

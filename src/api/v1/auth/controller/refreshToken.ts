@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import logger from "../../../../config/logger";
-import handleError from "../../../../helper/handle-error";
+import handleError from "../../../../helper/error/handle-error";
 import usecasesRefreshToken from "../../../../business/usecases/auth/refresh-token";
 
 async function ControllerRefreshToken(req: Request, res: Response) {

@@ -29,7 +29,7 @@ async function usecasesRefreshToken(token: string) {
 
     const newRefreshToken = encryptCredentials({
         id: idAuth,
-        account_id: decyptToken.id,
+        account_id: decyptToken.account_id,
         email: decyptToken.email,
     });
 

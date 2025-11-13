@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import logger from "../../../../config/logger";
-import handleError from "../../../../helper/handle-error";
+import handleError from "../../../../helper/error/handle-error";
 import usecaseLogout from "../../../../business/usecases/auth/logout";
 
 async function ControllerLogout(req: Request, res: Response) {
