@@ -4,6 +4,8 @@ import Environment from "../helper/constan/environment";
 import { Account } from "../models/account";
 import { User } from "../models/user";
 import { SessionAuth } from "../models/session_auth";
+import { Transaction } from "../models/transaction";
+import { CategorySpend } from "../models/category_spend";
 
 export const sequelize = new Sequelize({
     dialect: "postgres",
@@ -12,6 +14,11 @@ export const sequelize = new Sequelize({
     username: Environment.DB_PG_USERNAME,
     password: Environment.DB_PG_PASSWORD,
     database: Environment.DB_PG_NAME,
-    models: [Account, User, SessionAuth],
-    logging: false, // matikan log query di console
+    models: [Account, User, SessionAuth, CategorySpend, Transaction],
+    logging: false,
+    timezone: '+07:00',
+    dialectOptions: {
+        useUTC: false,
+        options: '-c timezone=Asia/Jakarta',
+    },
 });

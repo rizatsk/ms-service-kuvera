@@ -18,7 +18,7 @@ interface SessionAuthCreationAttributes extends Optional<SessionAuthAttributes, 
 })
 export class SessionAuth extends Model<SessionAuth, SessionAuthCreationAttributes> {
   @Column({
-    type: DataType.CHAR(50),
+    type: DataType.STRING(50),
     allowNull: false,
     primaryKey: true,
   })
@@ -26,7 +26,7 @@ export class SessionAuth extends Model<SessionAuth, SessionAuthCreationAttribute
 
   @ForeignKey(() => Account)
   @Column({
-    type: DataType.CHAR(50),
+    type: DataType.STRING(50),
     allowNull: false,
   })
   account_id!: string;

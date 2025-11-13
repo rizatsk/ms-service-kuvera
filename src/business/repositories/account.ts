@@ -29,7 +29,7 @@ export async function addAccount({
     await User.create({
         id: uuidGen(),
         account_id: account_id,
-        name,
+        name: name.trim(),
         photo_profile_url: photo_profile,
     })
 

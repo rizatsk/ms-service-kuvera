@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import usecasesAuth from "../../../../business/usecases/auth/auth";
 import logger from "../../../../config/logger";
-import handleError from "../../../../helper/handle-error";
+import handleError from "../../../../helper/error/handle-error";
 
-export async function ControllerAuthGoogle(req: Request, res: Response) {
+async function ControllerAuthGoogle(req: Request, res: Response) {
     try {
         const authHeader = req.headers['authorization'];
 
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            throw  40460;
+            throw  '40104';
         }
         const authToken = authHeader.split(' ')[1] as string;
         const { accessToken, refreshToken } = await usecasesAuth(authToken);
       
-        return res.status(200).json({
+        return res.status(201).json({
             message: 'success',
             data: {
                 accessToken: accessToken,
@@ -24,4 +24,6 @@ export async function ControllerAuthGoogle(req: Request, res: Response) {
         logger.error({ message: 'Error ControllerAuthGoogle', error });
         return handleError({ error, res });
     }
-}
+};
+
+export default ControllerAuthGoogle;

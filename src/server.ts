@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 import app from "./app";
 import { sequelize } from './config/database_pg';
 import logger from './config/logger';
+import serverGraphql from './graphql';
+import cors from 'cors';
+import express from 'express';
+import { expressMiddleware } from '@as-integrations/express5';
 
 // Muat variabel lingkungan dari file .env
 dotenv.config();
@@ -11,9 +15,27 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 // Mulai server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  // Run Graphql
+  await serverGraphql.start();
+  app.use(
+    '/graphql',
+    cors(),
+    express.json(),
+    expressMiddleware(serverGraphql, {
+      context: async ({ req }) => ({ req }),
+    }),
+  );
+
+  app.use((req, res) => {
+    res.status(404).json({
+      status: 'error',
+      message: `Route Not Found`,
+    });
+  });
+
   // connect db
-  sequelize.sync({ alter: false })
+  sequelize.sync({ alter: false,  force: false })
     .then(() => logger.info("Database connected & synced!"))
     .catch((err) => logger.error({ message: "Database error", error: err }));
 

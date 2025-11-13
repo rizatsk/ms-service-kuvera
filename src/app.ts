@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { sequelize } from './config/database_pg';
 import loadRoutes from './routes';
 
 const app = express();

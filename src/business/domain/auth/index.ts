@@ -1,13 +1,13 @@
 import Environment from "../../../helper/constan/environment";
 import { addSessionAuth, deleteSessionAuthById, getSessionAuthByAccountId } from "../../repositories/session_auth";
-import { generateToken } from "./generate-token";
+import { generateAuthToken } from "./auth-token";
 
 export async function saveAndGenereateToken(account_id: string, email: string) {
     // Get session auths
     const session_auths = await getSessionAuthByAccountId(account_id);
 
     // Genereate accessToken
-    const { accessToken, refreshToken, token_id } = generateToken({
+    const { accessToken, refreshToken, token_id } = generateAuthToken({
         account_id: account_id as string,
         email: email,
     });

@@ -4,6 +4,7 @@ dotenv.config();
 const Environment = {
     SERVICE_NAME: process.env.SERVICE_NAME || 'ms_service_kuvera',
     LOGGER_LEVEL: process.env.LOGGER_LEVEL || 'debug',
+    DEBUG: process.env.DEBUG || 'not-active',
 
     URL_API_IHSG: process.env.URL_IHSG || 'https://localhost/ihsg',
     URL_API_ANTAM: process.env.URL_ANTAM || 'https://localhost/antam',
@@ -26,6 +27,7 @@ const Environment = {
     MAX_DEVICE_LOGIN: parseInt(process.env.MAX_DEVICE_LOGIN || '3'),
     SECRET_TOKEN_JWT: process.env.SECRET_TOKEN_JWT || '',
     PRIVATE_KEY_JWT: process.env.PRIVATE_KEY_JWT || '',
+    PUBLIC_KEY_JWT: process.env.PUBLIC_KEY_JWT || '',
 }
 
 export default Environment;

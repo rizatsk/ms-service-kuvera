@@ -15,15 +15,24 @@ type getDataUserGoogleResponse = {
 export async function getDataUserGoogle(
     token: string,
 ): Promise<getDataUserGoogleResponse> {
-    const response = await axios({
-        method: 'GET',
-        url: Environment.URL_AUTH_GOOGLE,
-        headers: {
-            Authorization: 'Bearer ' + token,
-        },
-    });
+    try {
 
-    const responseData = response.data;
-    logger.debug({message: 'Response data auth google', data: responseData})
-    return responseData;
+        const response = await axios({
+            method: 'GET',
+            url: Environment.URL_AUTH_GOOGLE,
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        });
+
+        const responseData = response.data;
+        logger.debug({ message: 'Response data auth google', data: responseData })
+        return responseData;
+    } catch (error: any) {
+        if (error.status === 401) {
+            throw '40101';
+        };
+
+        throw error;
+    }
 }
