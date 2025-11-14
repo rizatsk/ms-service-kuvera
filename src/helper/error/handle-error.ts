@@ -9,7 +9,7 @@ type HandleErrorType = {
 
 const handleError = ({ error, res }: HandleErrorType) => {
     if (typeof error === 'string') {
-        if (error === "40101" || error === "40104") {
+        if (error === "40101" || error === "40104" || error === "40102") {
             return res.status(401).json({
                 message: 'unauthenticated',
                 status_code: error,

@@ -1,8 +1,9 @@
-import { CreationAttributes } from "sequelize";
+import { CreationAttributes, QueryTypes } from "sequelize";
 import uuidGen from "../../config/uuid";
 import { Account } from "../../models/account";
 import { DomainAddAccountProps } from "./type";
 import { User } from "../../models/user";
+import { sequelize } from "../../config/database_pg";
 
 export async function getAccountByEmail(email: string) {
     const account = await Account.findOne({
@@ -33,8 +34,23 @@ export async function addAccount({
         photo_profile_url: photo_profile,
     })
 
-    return { 
-        account_id, 
+    return {
+        account_id,
         email
     };
+}
+
+export async function getDataAccountGraphQl(account_id: string) {
+    const [results] = await sequelize.query(
+        `SELECT name, email, photo_profile_url, created_dt, updated_dt 
+          FROM accounts
+          JOIN users ON accounts.id = users.account_id
+          WHERE accounts.id = :id`,
+        {
+            replacements: { id: account_id },
+            type: QueryTypes.SELECT,
+        }
+    );
+
+    return results;
 }

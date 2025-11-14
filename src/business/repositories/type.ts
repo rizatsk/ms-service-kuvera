@@ -1,3 +1,5 @@
+import { changeStatusCategorySpend } from "./category_spend"
+
 export type DomainAddAccountProps = {
     email: string,
     name: string,
@@ -8,4 +10,21 @@ export type AddSessionAuthParam = {
     account_id: string, 
     token: string, 
     id: string
+}
+
+export type ChangeStatusCategorySpendParam = {
+    id: string, 
+    status: boolean, 
+    account_id: string
+}
+
+export type TypeTransaction = 'incoming' | 'outgoing';
+
+export type AddTransactionParam = {
+    account_id: string
+    category_id: string
+    money_spent: number
+    notes?: string
+    type: TypeTransaction
+    created_dt: Date
 }

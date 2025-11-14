@@ -26,19 +26,11 @@ export function generateAuthToken({ account_id, email }: GenerateTokenParams): G
 export function verifyAuthToken(token: string): EncryptCredentialParam {
   try {
     const userToken = verifyTokenJwt(token);
-    const decryptToken = decyptCredentials(userToken)
+    const decryptToken = decyptCredentials(userToken);
 
     return decryptToken
   } catch (error) {
     logger.error({message: 'Error verify token auth', error});
     throw '40101';
-  }
-}
-
-export function verifyAuthTokenGraphQl(token: string): EncryptCredentialParam {
-  try {
-    return verifyAuthToken(token);
-  } catch (error: any) {
-    throw new Error(error);
   }
 }

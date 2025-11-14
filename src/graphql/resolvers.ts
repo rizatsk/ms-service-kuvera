@@ -3,11 +3,12 @@ import HandlerCategorySpendGraphQl from "./handler/categories_spend";
 
 export const resolvers = {
   Query: {
-    account: async (_: any, __: any, { req }: { req: any }) => {
+    account: async (parent: any, args: any, { req }: { req: any }) => {
       return await HandlerAccountGraphQl(req);
     },
-    categories_spend: async (_: any, __: any, { req }: { req: any }) => {
-      return await HandlerCategorySpendGraphQl(req);
+    categories_spend: async (parent: any, args: any, { req }: { req: any }) => {
+      const {status} = args;
+      return await HandlerCategorySpendGraphQl(req, status);
     },
   },
 };

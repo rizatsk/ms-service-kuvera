@@ -1,7 +1,6 @@
 import { Request } from "express";
-import { verifyAuthToken, verifyAuthTokenGraphQl } from "../../business/domain/auth/auth-token";
-import { sequelize } from "../../config/database_pg";
-import { QueryTypes } from "sequelize";
+import { validateSessionAuthTokenGraphQl } from "../../business/domain/auth";
+import { getDataAccountGraphQl } from "../../business/repositories/account";
 
 async function HandlerAccountGraphQl(req: Request) {
   const auth = req.headers.authorization;
@@ -12,20 +11,9 @@ async function HandlerAccountGraphQl(req: Request) {
 
   const token = auth.split(" ")[1] as string;
   // Verify token JWT
-  const data_user = verifyAuthTokenGraphQl(token);
+  const data_user = await validateSessionAuthTokenGraphQl(token);
 
-  const [results] = await sequelize.query(
-    `SELECT name, email, photo_profile_url, created_dt, updated_dt 
-          FROM accounts
-          JOIN users ON accounts.id = users.account_id
-          WHERE accounts.id = :id`,
-    {
-      replacements: { id: data_user.account_id },
-      type: QueryTypes.SELECT,
-    }
-  );
-
-  return results;
+  return getDataAccountGraphQl(data_user.account_id);
 }
 
 export default HandlerAccountGraphQl;

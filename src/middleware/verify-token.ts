@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import logger from "../config/logger";
 import handleError from "../helper/error/handle-error";
 import { verifyAuthToken } from "../business/domain/auth/auth-token";
+import { validateSessionAuthToken } from "../business/domain/auth";
 
 export interface RequestVerifyTokenProps extends Request {
     account?: {
@@ -10,7 +11,7 @@ export interface RequestVerifyTokenProps extends Request {
     }
 }
 
-function verifyToken(req: RequestVerifyTokenProps, res: Response, next: NextFunction) {
+async function verifyToken(req: RequestVerifyTokenProps, res: Response, next: NextFunction) {
     try {
         const authHeader = req.headers['authorization'];
 
@@ -19,7 +20,7 @@ function verifyToken(req: RequestVerifyTokenProps, res: Response, next: NextFunc
         }
         const token = authHeader.split(' ')[1] as string;
 
-        const data_user = verifyAuthToken(token);
+        const data_user = await validateSessionAuthToken(token);
         req.account = {
             account_id: data_user.account_id,
             email: data_user.email,

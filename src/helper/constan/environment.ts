@@ -24,7 +24,7 @@ const Environment = {
     ENCRYPT_KEY_IV: process.env.ENCRYPT_KEY_IV || '',
     ALGORITHM_ENCRYPT: process.env.ALGORITHM_ENCRYPT || '',
 
-    MAX_DEVICE_LOGIN: parseInt(process.env.MAX_DEVICE_LOGIN || '3'),
+    MAX_DEVICE_LOGIN: parseInt(process.env.MAX_DEVICE_LOGIN || '1'),
     SECRET_TOKEN_JWT: process.env.SECRET_TOKEN_JWT || '',
     PRIVATE_KEY_JWT: process.env.PRIVATE_KEY_JWT || '',
     PUBLIC_KEY_JWT: process.env.PUBLIC_KEY_JWT || '',

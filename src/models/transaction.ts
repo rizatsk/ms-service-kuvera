@@ -1,12 +1,14 @@
 import { Optional } from "sequelize";
 import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { TypeTransaction } from "../business/repositories/type";
 
 interface TransactionAttributes {
   id: string;
   account_id: string;
   category_id: string;
-  money_spent: string;
+  money_spent: number;
   notes?: string;
+  type: TypeTransaction;
   created_dt: Date;
 }
 
