@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { addSpendCategorySchema, changeStatusCategorySchema } from "./schema";
+import { addTransactionSchema, editTransactionSchema } from "./schema";
 
-export const addSpendCategoryValidation = (req: Request, res: Response, next: NextFunction) => {
-    const result = addSpendCategorySchema.validate(req.body || {});
+export const addTransactionValidation = (req: Request, res: Response, next: NextFunction) => {
+    const result = addTransactionSchema.validate(req.body || {});
 
     if (result.error) {
         // Tangani kesalahan validasi
@@ -15,8 +15,8 @@ export const addSpendCategoryValidation = (req: Request, res: Response, next: Ne
     next();
 };
 
-export const changeStatuspendCategoryValidation = (req: Request, res: Response, next: NextFunction) => {
-    const result = changeStatusCategorySchema.validate(req.body || {});
+export const editTransactionValidation = (req: Request, res: Response, next: NextFunction) => {
+    const result = editTransactionSchema.validate(req.body || {});
 
     if (result.error) {
         // Tangani kesalahan validasi

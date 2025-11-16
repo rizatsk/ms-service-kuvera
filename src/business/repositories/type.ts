@@ -28,3 +28,20 @@ export type AddTransactionParam = {
     type: TypeTransaction
     created_dt: Date
 }
+
+export type EditTransactionParam = {
+    account_id: string
+    id_transaction: string
+    category_id: string
+    money_spent: number
+    notes?: string
+    type: TypeTransaction
+    created_dt: Date
+};
+
+export type GetTransactionByAccountIdParam = {
+    account_id: string,
+    type: TypeTransaction,
+    start_date?: string,
+    end_date?: string
+}

@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import logger from "../../../../config/logger";
+import handleError from "../../../../helper/error/handle-error";
 import { getIHSGData } from "../../../../service/ihsg";
 
 export default async function ControlerGetIhsgPrice(req: Request, res: Response) {
@@ -10,9 +12,7 @@ export default async function ControlerGetIhsgPrice(req: Request, res: Response)
             data: result.data
         })
     } catch(error) {
-        console.error("error controller get ihsg price", error);
-        return res.status(400).json({
-            message: 'unsuccess'
-        })
+        logger.error({ message: 'error ControlerGetIhsgPrice', error });
+        return handleError({ error, res });
     }
 }
