@@ -2,7 +2,7 @@ import { QueryTypes } from "sequelize";
 import { sequelize } from "../../config/database_pg";
 import uuidGen from "../../config/uuid";
 import { CategorySpend } from "../../models/category_spend";
-import { ChangeStatusCategorySpendParam } from "./type";
+import { CategoryType, ChangeStatusCategorySpendParam } from "./type";
 
 export async function addCategorySpend(name: string, account_id: string) {
     const result = await CategorySpend.create({
@@ -41,25 +41,25 @@ export async function changeStatusCategorySpend({ id, status, account_id }: Chan
     );
 }
 
-export async function getCategorySpendByAccountId(account_id: string) {
+export async function getCategorySpendByAccountId(account_id: string): Promise<CategoryType[]> {
     const results = await sequelize.query(
         `SELECT id, name, status
-      FROM categories_spend
-      WHERE account_id IN('all', :id)`,
+            FROM categories_spend
+            WHERE account_id IN('all', :id)`,
         {
             replacements: { id: account_id },
             type: QueryTypes.SELECT,
         }
     );
 
-    return results;
+    return results as CategoryType[];
 }
 
 export async function getCategorySpendByAccountIdAndStatus(account_id: string, status: boolean) {
     const results = await sequelize.query(
         `SELECT id, name, status
-      FROM categories_spend
-      WHERE account_id IN('all', :id) and status = :status`,
+            FROM categories_spend
+            WHERE account_id IN('all', :id) and status = :status`,
         {
             replacements: { id: account_id, status },
             type: QueryTypes.SELECT,

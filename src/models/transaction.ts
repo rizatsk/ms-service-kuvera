@@ -1,6 +1,7 @@
 import { Optional } from "sequelize";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, Model, Table } from "sequelize-typescript";
 import { TypeTransaction } from "../business/repositories/type";
+import { CategorySpend } from "./category_spend";
 
 interface TransactionAttributes {
   id: string;
@@ -61,4 +62,10 @@ export class Transaction extends Model<Transaction, TransactionCreationAttribute
     allowNull: false,
   })
   created_dt!: Date;
+
+  @BelongsTo(() => CategorySpend, {
+    foreignKey: "category_id",
+    targetKey: "id",
+  })
+  category!: CategorySpend;
 }

@@ -41,7 +41,32 @@ export type EditTransactionParam = {
 
 export type GetTransactionByAccountIdParam = {
     account_id: string,
-    type: TypeTransaction,
+    type: TypeTransaction | 'all',
+    limit: number,
     start_date?: string,
     end_date?: string
+}
+
+export type CategoryType = {
+    id: string
+    name: string
+    status: boolean
+}
+
+export type TransactionType = {
+    id: string,
+    account_id: string,
+    category_id: string,
+    category_name: string,
+    money_spent: number,
+    notes: string,
+    type: TypeTransaction,
+    created_dt: Date,
+}
+
+export type GetSumerizeTransactionByAccountIdParam = {
+    account_id: string, 
+    type: TypeTransaction, 
+    start_date: Date, 
+    end_date: Date
 }

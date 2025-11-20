@@ -1,6 +1,7 @@
 import moment from "moment";
 import { Optional } from "sequelize";
 import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Transaction } from "./transaction";
 
 interface CategorySpendAttributes {
   id: string;

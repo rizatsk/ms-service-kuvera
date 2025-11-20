@@ -11,7 +11,7 @@ export function generateTokenJwt(hash: GenerateTokenJwtParam): string {
 
     const options = {
       issuer: 'rjshub',
-      expiresIn: 3600,
+      expiresIn: 3600, // 1 hours
       algorithm: 'RS256' as jwt.Algorithm,
     };
     const token = jwt.sign(
