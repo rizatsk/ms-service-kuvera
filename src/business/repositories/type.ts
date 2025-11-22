@@ -42,7 +42,7 @@ export type EditTransactionParam = {
 export type GetTransactionByAccountIdParam = {
     account_id: string,
     type: TypeTransaction | 'all',
-    limit: number,
+    limit?: number,
     start_date?: string,
     end_date?: string
 }

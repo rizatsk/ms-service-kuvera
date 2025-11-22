@@ -62,7 +62,7 @@ export async function getTransactionByAccountId(param: GetTransactionByAccountId
         condition.type = param.type
     };
 
-    const result = await Transaction.findAll({
+    const queryTransaction: any = {
         raw: true,
         nest: true,
         include: [
@@ -73,19 +73,23 @@ export async function getTransactionByAccountId(param: GetTransactionByAccountId
         ],
         where: condition,
         order: [['created_dt', 'DESC']],
-        limit: param.limit
-    });
+    }
+    if (param.limit) {
+        queryTransaction.limit = param.limit
+    }
+
+    const result = await Transaction.findAll(queryTransaction);
 
     const mapping = result.map((data) => {
         return {
             id: data.id,
-                account_id: data.account_id,
-                category_id: data.category_id,
-                category_name: data.category.name,
-                money_spent: data.money_spent,
-                notes: data.notes,
-                type: data.type,
-                created_dt: data.created_dt,
+            account_id: data.account_id,
+            category_id: data.category_id,
+            category_name: data.category.name,
+            money_spent: data.money_spent,
+            notes: data.notes,
+            type: data.type,
+            created_dt: data.created_dt,
         }
     })
     return mapping as TransactionType[];
