@@ -99,16 +99,24 @@ export async function getSumerizeTransactionByAccountId({
     account_id, type, start_date, end_date
 }: GetSumerizeTransactionByAccountIdParam) {
     const results = await sequelize.query(
-        `SELECT category_id, name, SUM(money_spent) as total_money_spent
-            FROM transactions 
-            JOIN categories_spend AS category 
+        `SELECT
+            category.id AS category_id,
+            category.name,
+            COALESCE(SUM(transactions.money_spent), 0) AS total_money_spent
+        FROM
+            categories_spend AS category
+            LEFT JOIN transactions 
                 ON transactions.category_id = category.id
-            WHERE transactions.account_id = :account_id
-                AND type = :type 
-                AND transactions.created_dt >= :start_date AT TIME ZONE 'UTC'
-                AND transactions.created_dt <= :end_date AT TIME ZONE 'UTC'
-            GROUP BY category_id, name;
-            `,
+                AND transactions.account_id = :account_id
+                AND transactions.type = :type
+                AND transactions.created_dt >= (:start_date AT TIME ZONE 'UTC')
+                AND transactions.created_dt <= (:end_date AT TIME ZONE 'UTC')
+        WHERE
+            category.account_id IN ('all', :account_id)
+            AND category.status = true
+        GROUP BY
+            category.id,
+            category.name;`,
         {
             replacements: {
                 account_id,
@@ -119,6 +127,13 @@ export async function getSumerizeTransactionByAccountId({
             type: QueryTypes.SELECT,
         }
     );
+
+    logger.debug({message: 'Result data sumerize transaction', data: {
+        account_id,
+        type,
+        start_date,
+        end_date
+    }})
 
     return results;
 }
