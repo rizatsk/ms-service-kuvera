@@ -27,7 +27,7 @@ export const typeDefs = `#graphql
   type SumerizeCategoryTransaction {
     category_id: String!
     category_name: String!
-    total_money_spent: Number!
+    total_money_spent: Int!
   }
 
   type Query {
