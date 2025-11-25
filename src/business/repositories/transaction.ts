@@ -101,7 +101,7 @@ export async function getSumerizeTransactionByAccountId({
     const results = await sequelize.query(
         `SELECT
             category.id AS category_id,
-            category.name,
+            category.name AS category_name,
             COALESCE(SUM(transactions.money_spent), 0) AS total_money_spent
         FROM
             categories_spend AS category
@@ -113,7 +113,6 @@ export async function getSumerizeTransactionByAccountId({
                 AND transactions.created_dt <= (:end_date AT TIME ZONE 'UTC')
         WHERE
             category.account_id IN ('all', :account_id)
-            AND category.status = true
         GROUP BY
             category.id,
             category.name;`,
