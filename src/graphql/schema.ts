@@ -28,6 +28,7 @@ export const typeDefs = `#graphql
     category_id: String!
     category_name: String!
     total_money_spent: Int!
+    category_status: Boolean!
   }
 
   type Query {

@@ -66,7 +66,7 @@ export type TransactionType = {
 
 export type GetSumerizeTransactionByAccountIdParam = {
     account_id: string, 
-    type: TypeTransaction, 
+    type: TypeTransaction | 'all', 
     start_date: Date, 
     end_date: Date
 }

@@ -1,7 +1,7 @@
 import { Op, QueryTypes, Sequelize } from "sequelize";
 import uuidGen from "../../config/uuid";
 import { Transaction } from "../../models/transaction";
-import { AddTransactionParam, EditTransactionParam, GetSumerizeTransactionByAccountIdParam, GetTransactionByAccountIdParam, TransactionType } from "./type";
+import { AddTransactionParam, EditTransactionParam, GetSumerizeTransactionByAccountIdParam, GetTransactionByAccountIdParam, TransactionType, TypeTransaction } from "./type";
 import { sequelize } from "../../config/database_pg";
 import logger from "../../config/logger";
 import { CategorySpend } from "../../models/category_spend";
@@ -98,19 +98,22 @@ export async function getTransactionByAccountId(param: GetTransactionByAccountId
 export async function getSumerizeTransactionByAccountId({
     account_id, type, start_date, end_date
 }: GetSumerizeTransactionByAccountIdParam) {
+    const whereType = type === 'all' ? '' : 'AND transactions.type = :type';
+    
     const results = await sequelize.query(
         `SELECT
             category.id AS category_id,
             category.name AS category_name,
-            COALESCE(SUM(transactions.money_spent), 0) AS total_money_spent
+            COALESCE(SUM(transactions.money_spent), 0) AS total_money_spent,
+            category.status AS category_status
         FROM
             categories_spend AS category
             LEFT JOIN transactions 
                 ON transactions.category_id = category.id
                 AND transactions.account_id = :account_id
-                AND transactions.type = :type
-                AND transactions.created_dt >= (:start_date AT TIME ZONE 'UTC')
-                AND transactions.created_dt <= (:end_date AT TIME ZONE 'UTC')
+                ${whereType}
+                AND transactions.created_dt >= :start_date
+                AND transactions.created_dt <= :end_date
         WHERE
             category.account_id IN ('all', :account_id)
         GROUP BY
@@ -119,7 +122,7 @@ export async function getSumerizeTransactionByAccountId({
         {
             replacements: {
                 account_id,
-                type,
+                type: type as TypeTransaction,
                 start_date: start_date,
                 end_date: end_date
             },
