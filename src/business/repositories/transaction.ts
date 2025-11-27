@@ -1,7 +1,7 @@
 import { Op, QueryTypes, Sequelize } from "sequelize";
 import uuidGen from "../../config/uuid";
 import { Transaction } from "../../models/transaction";
-import { AddTransactionParam, EditTransactionParam, GetSumerizeTransactionByAccountIdParam, GetTransactionByAccountIdParam, TransactionType, TypeTransaction } from "./type";
+import { AddTransactionParam, EditTransactionParam, GetSumerizeTransactionByAccountIdParam, GetTransactionByAccountIdParam, GetTransactionsByCategoryParam, TransactionType, TypeTransaction } from "./type";
 import { sequelize } from "../../config/database_pg";
 import logger from "../../config/logger";
 import { CategorySpend } from "../../models/category_spend";
@@ -99,7 +99,7 @@ export async function getSumerizeTransactionByAccountId({
     account_id, type, start_date, end_date
 }: GetSumerizeTransactionByAccountIdParam) {
     const whereType = type === 'all' ? '' : 'AND transactions.type = :type';
-    
+
     const results = await sequelize.query(
         `SELECT
             category.id AS category_id,
@@ -130,12 +130,30 @@ export async function getSumerizeTransactionByAccountId({
         }
     );
 
-    logger.debug({message: 'Result data sumerize transaction', data: {
-        account_id,
-        type,
-        start_date,
-        end_date
-    }})
+    logger.debug({
+        message: 'Result data sumerize transaction', data: {
+            account_id,
+            type,
+            start_date,
+            end_date
+        }
+    })
 
     return results;
+}
+
+export async function getTransactionsByCategory(param: GetTransactionsByCategoryParam) {
+    const transactions = await Transaction.findAll({
+        raw: true,
+        where: {
+            account_id: param.account_id,
+            category_id: param.category_id,
+            created_dt: {
+                [Op.gte]: new Date(param.start_date),
+                [Op.lte]: new Date(param.end_date)
+            }
+        },
+    });
+
+    return transactions;
 }

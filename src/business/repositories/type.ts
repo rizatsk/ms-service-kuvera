@@ -70,3 +70,10 @@ export type GetSumerizeTransactionByAccountIdParam = {
     start_date: Date, 
     end_date: Date
 }
+
+export type GetTransactionsByCategoryParam = {
+    account_id: string, 
+    category_id: string, 
+    start_date: Date, 
+    end_date: Date
+}

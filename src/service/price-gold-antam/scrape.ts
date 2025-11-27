@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import Environment from "../../helper/constan/environment";
 import { redisGet, redisSet } from "../../config/redis";
 import { getTTLUntilNextMorningGold } from "../../helper/ttl-cache";
+import logger from "../../config/logger";
 
 async function scrapeHargaEmas() {
     try {
@@ -54,7 +55,7 @@ async function scrapeHargaEmas() {
 
         return dataEmas;
     } catch (error) {
-        console.error(`Terjadi kesalahan saat scraping:`, error);
+        logger.error({message: `Terjadi kesalahan saat scraping:`, error});
         throw error;
     }
 }

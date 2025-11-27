@@ -31,10 +31,19 @@ export const typeDefs = `#graphql
     category_status: Boolean!
   }
 
+  type TransactionsByCategory {
+    id: String!
+    money_spent: Int!
+    notes: String!
+    type: String!
+    created_dt: DateTime!
+  }
+
   type Query {
     account: Account
     categories_spend(status: Boolean): [Category_Spend!]!
     transactions(type: String, limit: Int, start_date: String, end_date: String): [Transactions!]!
     sumerize_category_transactions(type: String, start_date: String, end_date: String): [SumerizeCategoryTransaction!]!
+    transactions_by_category(category_id: String, start_date: String, end_date: String): [TransactionsByCategory!]!
   }
 `;
