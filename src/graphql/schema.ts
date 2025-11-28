@@ -17,6 +17,7 @@ export const typeDefs = `#graphql
 
   type Transactions {
     id: String!
+    category_id: String!
     category_name: String!
     money_spent: Int!
     notes: String!
@@ -33,6 +34,7 @@ export const typeDefs = `#graphql
 
   type TransactionsByCategory {
     id: String!
+    category_id: String!
     money_spent: Int!
     notes: String!
     type: String!
