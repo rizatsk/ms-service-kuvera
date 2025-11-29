@@ -105,7 +105,8 @@ export async function getSumerizeTransactionByAccountId({
             category.id AS category_id,
             category.name AS category_name,
             COALESCE(SUM(transactions.money_spent), 0) AS total_money_spent,
-            category.status AS category_status
+            category.status AS category_status,
+            category.account_id AS account_id
         FROM
             categories_spend AS category
             LEFT JOIN transactions 
@@ -118,7 +119,8 @@ export async function getSumerizeTransactionByAccountId({
             category.account_id IN ('all', :account_id)
         GROUP BY
             category.id,
-            category.name;`,
+            category.name,
+            category.account_id;`,
         {
             replacements: {
                 account_id,

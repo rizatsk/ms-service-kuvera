@@ -30,6 +30,7 @@ export const typeDefs = `#graphql
     category_name: String!
     total_money_spent: Int!
     category_status: Boolean!
+    account_id: String!
   }
 
   type TransactionsByCategory {
