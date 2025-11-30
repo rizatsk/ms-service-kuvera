@@ -6,7 +6,7 @@ const config_migrations = {
     username: process.env.DB_PG_USERNAME,
     password: process.env.DB_PG_PASSWORD,
     database: process.env.DB_PG_NAME,
-    host: process.env.DB_HOST,
+    host: process.env.DB_PG_HOST,
     port: process.env.DB_PG_PORT,
     dialect: 'postgres',
     dialectOptions: {
