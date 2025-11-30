@@ -2,7 +2,7 @@ import { QueryTypes } from "sequelize";
 import { sequelize } from "../../config/database_pg";
 import uuidGen from "../../config/uuid";
 import { CategorySpend } from "../../models/category_spend";
-import { CategoryType, ChangeStatusCategorySpendParam } from "./type";
+import { CategoryType, ChangeNameCategorySpendParam, ChangeStatusCategorySpendParam } from "./type";
 
 export async function addCategorySpend(name: string, account_id: string) {
     const result = await CategorySpend.create({
@@ -65,6 +65,22 @@ export async function getCategorySpendByAccountIdAndStatus(account_id: string, s
             type: QueryTypes.SELECT,
         }
     );
-    
+
     return results;
 }
+
+export async function changeNameCategorySpend({ account_id, category_id, category_name }: ChangeNameCategorySpendParam) {
+    const [result] = await CategorySpend.update(
+        {
+            name: category_name
+        },
+        {
+            where: {
+                id: category_id,
+                account_id,
+            }
+        }
+    );
+
+    return result;
+};

@@ -77,3 +77,9 @@ export type GetTransactionsByCategoryParam = {
     start_date: Date, 
     end_date: Date
 }
+
+export type ChangeNameCategorySpendParam = {
+    account_id: string
+    category_id: string
+    category_name: string
+}
