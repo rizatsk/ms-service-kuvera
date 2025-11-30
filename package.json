@@ -15,7 +15,7 @@
     "db:seed:generate": "sequelize-cli seed:generate --name"
   },
   "keywords": [],
-  "author": "",
+  "author": "Rizat",
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^5.1.0",
