@@ -1,37 +1,12 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import Environment from "../helper/constan/environment";
 
 const config_migrations = {
   development: {
-    username: process.env.DB_PG_USERNAME,
-    password: process.env.DB_PG_PASSWORD,
-    database: process.env.DB_PG_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PG_PORT,
-    dialect: 'postgres',
-    dialectOptions: {
-      useUTC: false, // Optional
-    },
-    timezone: '+07:00', // Optional
-  },
-  test: {
-    username: process.env.DB_PG_USERNAME,
-    password: process.env.DB_PG_PASSWORD,
-    database: process.env.DB_PG_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PG_PORT,
-    dialect: 'postgres',
-    dialectOptions: {
-      useUTC: false, // Optional
-    },
-    timezone: '+07:00', // Optional
-  },
-  production: {
-    username: process.env.DB_PG_USERNAME,
-    password: process.env.DB_PG_PASSWORD,
-    database: process.env.DB_PG_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PG_PORT,
+    username: Environment.DB_PG_USERNAME,
+    password: Environment.DB_PG_PASSWORD,
+    database: Environment.DB_PG_NAME,
+    host: Environment.DB_PG_HOST,
+    port: Environment.DB_PG_PORT,
     dialect: 'postgres',
     dialectOptions: {
       useUTC: false, // Optional
