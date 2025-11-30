@@ -17,7 +17,7 @@ export function getTTLUntilNextMorningStock(): number {
 
   // Untuk hari kerja (Senin–Jumat)
   if (now < todayAt16) {
-    return 3 * 60;
+    return 3;
   } else {
     // Sudah lewat jam 16:00 → TTL sampai besok jam 09:00
     const diffTo9 = tomorrowAt9.getTime() - now.getTime();
