@@ -8,7 +8,7 @@ export async function getIHSGData(maxRetries = 3) {
     for (let i = 0; i < maxRetries; i++) {
         try {
             const browser = await puppeteer.launch({
-                headless: 'shell',
+                headless: false,
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
