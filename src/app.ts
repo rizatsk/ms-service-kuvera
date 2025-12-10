@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import loadRoutes from './routes';
+import path from 'path';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
   next();
 });
+app.use("/public", express.static(path.resolve(__dirname, "../public")));
 
 loadRoutes(app);
 

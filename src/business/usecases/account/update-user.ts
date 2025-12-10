@@ -1,3 +1,4 @@
+import Environment from "../../../helper/constan/environment";
 import { handlePhotoProfileExisting, uploadPhotoProfile } from "../../domain/account/photo-profile";
 import { updateUserByAccountId } from "../../repositories/account";
 import { UsecaseUpdateUserByAccountIdParam } from "./type";
@@ -24,7 +25,7 @@ const usecaseUpdateUserByAccountId = async ({
 
     return {
         update_name: name,
-        photo_profile_url
+        photo_profile_url: `${Environment.BASE_URL}${photo_profile_url}`
     }
 };
 

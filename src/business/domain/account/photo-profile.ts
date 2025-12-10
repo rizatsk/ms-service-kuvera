@@ -13,7 +13,7 @@ export function uploadPhotoProfile(photo_profile: Express.Multer.File): string {
 
         fs.writeFileSync(`${pathFile}`, photo_profile.buffer);
 
-        return pathFile.replace('./public', '');
+        return pathFile.replace('./public', '/public');
     } catch (error) {
         logger.error({ message: 'Error save or delete file', error });
         throw error;

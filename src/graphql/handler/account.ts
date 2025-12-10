@@ -1,6 +1,7 @@
 import { Request } from "express";
 import { validateSessionAuthTokenGraphQl } from "../../business/domain/auth";
 import { getDataAccountGraphQl } from "../../business/repositories/account";
+import Environment from "../../helper/constan/environment";
 
 async function HandlerAccountGraphQl(req: Request) {
   const auth = req.headers.authorization;
@@ -13,7 +14,12 @@ async function HandlerAccountGraphQl(req: Request) {
   // Verify token JWT
   const data_user = await validateSessionAuthTokenGraphQl(token);
 
-  return getDataAccountGraphQl(data_user.account_id);
+  const account =  await getDataAccountGraphQl(data_user.account_id);
+
+  return {
+    ...account,
+    photo_profile_url: account.photo_profile_url?.includes('https') ? account.photo_profile_url : `${Environment.BASE_URL}${account.photo_profile_url}`
+  }
 }
 
 export default HandlerAccountGraphQl;

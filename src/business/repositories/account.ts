@@ -60,13 +60,15 @@ export async function updateUserByAccountId({
     name = null,
     photo_profile_url
 }: UpdateUserByAccountIdParam) {
-    let update_data = {};
+    let update_data: Record<string, any> = {
+        updated_dt: new Date()
+    };
 
-    if (name !== null) {
+    if (name) {
         update_data = { ...update_data, name };
     }
 
-    if (photo_profile_url !== null) {
+    if (photo_profile_url) {
         update_data = { ...update_data, photo_profile_url };
     }
 
