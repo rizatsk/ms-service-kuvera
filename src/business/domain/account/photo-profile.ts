@@ -4,7 +4,7 @@ import { getDataAccountGraphQl } from '../../repositories/account';
 
 export function uploadPhotoProfile(photo_profile: Express.Multer.File): string {
     try {
-        const saveFolder = `./public/images/photo_profiles/`;
+        const saveFolder = `./public/images/photo_profiles`;
         if (!fs.existsSync(saveFolder)) {
             fs.mkdirSync(saveFolder, { recursive: true });
         }
@@ -25,7 +25,7 @@ export async function handlePhotoProfileExisting(account_id: string) {
         const account = await getDataAccountGraphQl(account_id);
 
         if (account.photo_profile_url) {
-            const existingFilePath = `./public${account.photo_profile_url}`;
+            const existingFilePath = `.${account.photo_profile_url}`;
             if (fs.existsSync(existingFilePath)) {
                 fs.unlinkSync(existingFilePath);
             }
