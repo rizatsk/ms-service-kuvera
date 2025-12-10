@@ -1,7 +1,7 @@
 import { CreationAttributes, QueryTypes } from "sequelize";
 import uuidGen from "../../config/uuid";
 import { Account } from "../../models/account";
-import { DomainAddAccountProps } from "./type";
+import { AccountType, DomainAddAccountProps, UpdateUserByAccountIdParam } from "./type";
 import { User } from "../../models/user";
 import { sequelize } from "../../config/database_pg";
 
@@ -40,7 +40,7 @@ export async function addAccount({
     };
 }
 
-export async function getDataAccountGraphQl(account_id: string) {
+export async function getDataAccountGraphQl(account_id: string): Promise<AccountType> {
     const [results] = await sequelize.query(
         `SELECT name, email, photo_profile_url, created_dt, updated_dt 
           FROM accounts
@@ -52,5 +52,30 @@ export async function getDataAccountGraphQl(account_id: string) {
         }
     );
 
-    return results;
+    return results as AccountType;
+}
+
+export async function updateUserByAccountId({
+    account_id,
+    name = null,
+    photo_profile_url
+}: UpdateUserByAccountIdParam) {
+    let update_data = {};
+
+    if (name !== null) {
+        update_data = { ...update_data, name };
+    }
+
+    if (photo_profile_url !== null) {
+        update_data = { ...update_data, photo_profile_url };
+    }
+
+    await User.update(
+        { ...update_data },
+        {
+            where: {
+                account_id,
+            },
+        }
+    );
 }
