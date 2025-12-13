@@ -147,6 +147,13 @@ export async function getSumerizeTransactionByAccountId({
 export async function getTransactionsByCategory(param: GetTransactionsByCategoryParam) {
     const transactions = await Transaction.findAll({
         raw: true,
+        nest: true,
+        include: [
+            {
+                model: CategorySpend,
+                attributes: ["name"],
+            },
+        ],
         where: {
             account_id: param.account_id,
             category_id: param.category_id,
@@ -157,5 +164,17 @@ export async function getTransactionsByCategory(param: GetTransactionsByCategory
         },
     });
 
-    return transactions;
+    const mapping = transactions.map((data) => {
+        return {
+            id: data.id,
+            account_id: data.account_id,
+            category_id: data.category_id,
+            category_name: data.category.name,
+            money_spent: data.money_spent,
+            notes: data.notes,
+            type: data.type,
+            created_dt: data.created_dt,
+        }
+    })
+    return mapping as TransactionType[];
 }
