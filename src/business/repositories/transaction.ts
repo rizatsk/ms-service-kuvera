@@ -162,6 +162,7 @@ export async function getTransactionsByCategory(param: GetTransactionsByCategory
                 [Op.lte]: new Date(param.end_date)
             }
         },
+        order: [['created_dt', 'DESC']],
     });
 
     const mapping = transactions.map((data) => {
