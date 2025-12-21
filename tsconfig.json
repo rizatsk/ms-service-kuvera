@@ -22,5 +22,6 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "moduleDetection": "force",
+    "resolveJsonModule": true,
   }
 }
