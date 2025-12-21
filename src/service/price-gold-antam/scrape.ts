@@ -87,31 +87,6 @@ export async function scrapeHargaEmasV2(typeGold: ScrapeGoldType) {
 
         const dataEmas: Array<any> = [];
 
-        // ANTAM
-        if (typeGold === 'antam' || typeGold === 'all') {
-            const dataRowsSelector = '#ANTAM .grid-cols-5.divide-x';
-            const goldAntam: Record<string, any> = {
-                type: 'ANTAM',
-                data: []
-            }
-            $(dataRowsSelector).each((index, element) => {
-                if (index === 0) return;
-
-                const columns = $(element).find('> div');
-
-                const berat = $(columns[0]).text().trim();
-                const hargaJual = $(columns[1]).text().trim();
-                const hargaBuyback = $(columns[2]).text().trim();
-
-                goldAntam.data.push({
-                    berat: `${berat}`,
-                    harga_jual: hargaJual.replace(/Rp\s*/g, '').trim(),
-                    harga_buyback: hargaBuyback.replace(/Rp\s*/g, '').trim()
-                });
-            });
-            dataEmas.push(goldAntam);
-        }
-
         // G24
         if (typeGold === 'antam' || typeGold === 'all') {
             const goldG24: Record<string, any> = {
@@ -136,6 +111,31 @@ export async function scrapeHargaEmasV2(typeGold: ScrapeGoldType) {
                 });
             });
             dataEmas.push(goldG24);
+        }
+
+        // ANTAM
+        if (typeGold === 'antam' || typeGold === 'all') {
+            const dataRowsSelector = '#ANTAM .grid-cols-5.divide-x';
+            const goldAntam: Record<string, any> = {
+                type: 'ANTAM',
+                data: []
+            }
+            $(dataRowsSelector).each((index, element) => {
+                if (index === 0) return;
+
+                const columns = $(element).find('> div');
+
+                const berat = $(columns[0]).text().trim();
+                const hargaJual = $(columns[1]).text().trim();
+                const hargaBuyback = $(columns[2]).text().trim();
+
+                goldAntam.data.push({
+                    berat: `${berat}`,
+                    harga_jual: hargaJual.replace(/Rp\s*/g, '').trim(),
+                    harga_buyback: hargaBuyback.replace(/Rp\s*/g, '').trim()
+                });
+            });
+            dataEmas.push(goldAntam);
         }
 
         // Set redis 1 hours
