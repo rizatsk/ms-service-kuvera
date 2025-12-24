@@ -138,8 +138,8 @@ export async function scrapeHargaEmasV2(typeGold: ScrapeGoldType) {
             dataEmas.push(goldAntam);
         }
 
-        // Set redis 1 hours
-        const ttlGold = getTTLUntilNextMorningGold()
+        // Set redis 30 minutes
+        const ttlGold = 1800
         await redisSet(keyCacheRedis, JSON.stringify(dataEmas), ttlGold);
 
         return dataEmas;
